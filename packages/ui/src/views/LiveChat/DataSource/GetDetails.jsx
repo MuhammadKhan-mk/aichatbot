@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../live-chat.css'
+import '../live-chat.css';
+import { BsTrash } from 'react-icons/bs';
 
 function extractWebsiteName(url) {
   try {
@@ -21,6 +22,28 @@ function GetDetails() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const handleDelete = (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this record permanently?");
+  
+    if (isConfirmed) {
+      fetch(`http://localhost:3005/api/deleteurl/${id}`, {
+        method: 'DELETE',
+      })
+        .then(response => {
+          if (response.ok) {
+            setData(data.filter(item => item.id !== id)); 
+          } else {
+            console.error(`Failed to delete record with ID ${id}`);
+          }
+        })
+        .catch(error => console.error('Error deleting record:', error));
+    } else {
+      console.log('Deletion cancelled by user.');
+    }
+  };
+  
+  
+
   return (
     <div className="scrollAreaViewport">
       <table className="data-table">
@@ -30,15 +53,19 @@ function GetDetails() {
             <th>Data Source</th>
             <th>Used By</th>
             <th>Last Updated</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} id={item.id}>
               <td>{extractWebsiteName(item.url)}</td>
               <td>Website</td>
               <td>Azister</td>
               <td>{item.timestamp}</td>
+              <td>
+                <button onClick={() => handleDelete(item.id)}><BsTrash /></button>
+              </td>
             </tr>
           ))}
         </tbody>
