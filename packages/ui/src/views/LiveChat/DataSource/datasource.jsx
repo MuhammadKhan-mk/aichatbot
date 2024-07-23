@@ -46,7 +46,7 @@ const KnowledgeComponent = () => {
                 } else {
                     console.log('Data scraping completed.')
                 }
-                // window.location.href = '/data-sources/added';
+                window.location.href = '/data-sources/added';
             } else {
                 setMessage('Failed to submit URL')
             }
