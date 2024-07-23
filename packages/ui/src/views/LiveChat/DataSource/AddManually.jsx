@@ -9,45 +9,52 @@ function AddManuallyIntent({ closeIndentForm, onSubmit }) {
     const [showLoader, setShowLoader] = useState(false)
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        setShowLoader(true)
+        e.preventDefault();
+        setShowLoader(true);
 
-        const patternsArray = patterns.split(',').map((pattern) => pattern.trim())
-        const responsesArray = responses.split(',').map((response) => response.trim())
+        const patternsArray = patterns.split(',').map((pattern) => pattern.trim());
+        const responsesArray = responses.split(',').map((response) => response.trim());
+
+        // Generate variations based on patterns
+        const generatedResponses = patternsArray.map((pattern, index) => ({
+            pattern,
+            response: responsesArray[index] || '', // handle any mismatch in array lengths
+        }));
 
         const data = {
             tag: tag,
             patterns: patternsArray,
-            responses: responsesArray
-        }
+            responses: responsesArray,
+            generatedResponses: generatedResponses, // include generated responses in data sent to backend
+        };
 
         try {
             const response = await fetch('http://localhost:3005/api/addIntent', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
-            })
+                body: JSON.stringify(data),
+            });
 
             if (!response.ok) {
-                throw new Error('Failed to add intent')
+                throw new Error('Failed to add intent');
             }
 
             setTimeout(() => {
-                setTag('')
-                setPatterns('')
-                setResponses('')
-                setShowLoader(false)
-                onSubmit()
-                closeIndentForm()
-            }, 3000)
+                setTag('');
+                setPatterns('');
+                setResponses('');
+                setShowLoader(false);
+                onSubmit();
+                closeIndentForm();
+            }, 3000);
         } catch (error) {
-            console.error('Error adding intent:', error)
-            alert('Failed to add intent. Please try again.')
-            onSubmit()
+            console.error('Error adding intent:', error);
+            alert('Failed to add intent. Please try again.');
+            onSubmit();
         }
-    }
+    };
 
     return (
         <div className='drop_dwn_form add_manually_form'>
