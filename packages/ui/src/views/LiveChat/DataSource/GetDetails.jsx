@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../live-chat.css';
 import { BsTrash } from 'react-icons/bs';
+import { MdAdd } from 'react-icons/md';
 
 function extractWebsiteName(url) {
   try {
@@ -45,6 +46,19 @@ function GetDetails() {
   
 
   return (
+    <div>
+      <div className='hdr_st_so hdr_deta'>
+                <div>
+                    <h2>Data sources</h2>
+                    <p>Azister will use the knowledge you add here to answer customer questions.</p>
+                </div>
+                <a href='/data-sources'>
+                  <button className='add_new_deta'>
+                    <span><MdAdd /></span>
+                    Add
+                  </button>
+                </a>
+            </div>
     <div className="scrollAreaViewport">
       <table className="data-table">
         <thead>
@@ -70,6 +84,7 @@ function GetDetails() {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }
