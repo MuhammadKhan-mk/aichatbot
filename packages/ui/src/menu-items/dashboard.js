@@ -65,6 +65,14 @@ const dashboard = {
             breadcrumbs: true
         },
         {
+            id: 'playground',
+            title: 'Play Ground',
+            type: 'item',
+            icon: icons.IconMessageCircle,
+            url: '/playground',
+            breadcrumbs: true
+        },
+        {
             id: 'chat',
             title: 'Live Chat',
             type: 'item',

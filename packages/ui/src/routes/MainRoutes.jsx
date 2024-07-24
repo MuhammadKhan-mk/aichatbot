@@ -16,6 +16,7 @@ const ChatWoot = Loadable(lazy(() => import('@/views/chatwoot/chatwoot')))
 
 const Chatflows = Loadable(lazy(() => import('@/views/chatflows')))
 const Calendly = Loadable(lazy(() => import('@/views/calendly')))
+const Playground = Loadable(lazy(() => import('@/views/Playground')))
 
 // agents routing
 const Agentflows = Loadable(lazy(() => import('@/views/agentflows')))
@@ -69,6 +70,10 @@ const MainRoutes = {
         {
             path: '/data-sources/added',
             element : <GetDetails/>
+        },
+        {
+            path: '/playground',
+            element : <Playground />
         },
         {
             path: '/chatwoot',
